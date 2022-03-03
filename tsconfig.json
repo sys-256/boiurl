@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "target": "ESNEXT",
+        "strict": true,
+        "outDir": "build",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "allowSyntheticDefaultImports": true,
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
