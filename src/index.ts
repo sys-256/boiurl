@@ -12,6 +12,12 @@ const config = {
 
 app.use(express.urlencoded({ extended: true })); // Parse form data
 
+// Init the database
+database.prepare(`CREATE TABLE IF NOT EXISTS url (
+    ID TEXT,
+    origin TEXT
+);`).run();
+
 app.get("/", (request, response) => {
     response.status(200).send(
 `<fieldset>
