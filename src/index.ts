@@ -8,16 +8,40 @@ const config = {
     urlRegex: /^(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?$/,
 };
 
-app.use(express.urlencoded({ extended: true })); // Parse form data
+// Parse form data
+app.use(express.urlencoded({ extended: true }));
+
+// Remove unneeded header
+app.disable(`X-Powered-By`);
 
 // Init the database
-database.prepare(`CREATE TABLE IF NOT EXISTS url (
+database
+    .prepare(
+        `CREATE TABLE IF NOT EXISTS url (
     ID TEXT,
     origin TEXT
-);`).run();
+);`,
+    )
+    .run();
 
-app.get(`/`, (request, response) => {
+process.on("SIGINT", () => {
+    database.close();
+    process.exit();
+});
+
+app.get(`/`, (_request, response) => {
     response.status(200).send(`<!DOCTYPE html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>boiurl</title>
+<style>
+    @media (prefers-color-scheme: dark) {
+        body {
+            background-color: #252525;
+            color: #fff;
+        }
+    }
+</style>
 <fieldset>
     <legend>URL to shorten</legend>
     <form method="post">
@@ -27,13 +51,13 @@ app.get(`/`, (request, response) => {
 </fieldset>`);
 });
 
-app.get(`/:id`, (request, repsonse) => {
+app.get(`/:id`, (request, response) => {
     const id = request.params.id;
     const query = database.prepare(`SELECT origin FROM url WHERE ID=?;`).all(id);
     if (query.length > 0) {
-        repsonse.status(301).redirect(query[0].origin);
+        response.status(301).redirect(query[0].origin);
     } else {
-        repsonse.status(404).send(`URL not found`);
+        response.status(404).send(`URL not found`);
     }
 });
 
