@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+    boiurl:
+        restart: always
+        container_name: boiurl
+        image: sys256/boiurl:latest
+        ports:
+            - "8035:8035"
+        volumes:
+            - "./boiurl-data:/data"
