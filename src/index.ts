@@ -72,10 +72,8 @@ app.post(`/`, (request, response) => {
     // Check if the url is already in the database
     const query = database.prepare(`SELECT ID FROM url WHERE origin=?;`).all(url);
     if (query.length > 0) {
-        response
-            .status(200)
-            .send(
-                `<!DOCTYPE html>
+        response.status(200).send(
+            `<!DOCTYPE html>
 <style>
     a {
         color: #000;
@@ -92,7 +90,7 @@ app.post(`/`, (request, response) => {
     }
 </style>
 <a href="//${request.headers.host}/${query[0].ID}">${request.protocol}://${request.headers.host}/${query[0].ID}</a>`,
-            );
+        );
         return;
     }
 
