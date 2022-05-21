@@ -75,7 +75,23 @@ app.post(`/`, (request, response) => {
         response
             .status(200)
             .send(
-                `<a href="//${request.headers.host}/${query[0].ID}">${request.protocol}://${request.headers.host}/${query[0].ID}</a>`,
+                `<!DOCTYPE html>
+<style>
+    a {
+        color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        body {
+            background-color: #252525;
+        }
+
+        a {
+            color: #fff;
+        }
+    }
+</style>
+<a href="//${request.headers.host}/${query[0].ID}">${request.protocol}://${request.headers.host}/${query[0].ID}</a>`,
             );
         return;
     }
@@ -86,11 +102,25 @@ app.post(`/`, (request, response) => {
 
     // Insert the url into the database and send link
     database.prepare(`INSERT INTO url VALUES (?, ?);`).run(id, url);
-    response
-        .status(200)
-        .send(
-            `<a href="//${request.headers.host}/${id}">${request.protocol}://${request.headers.host}/${id}</a>`,
-        );
+    response.status(200).send(
+        `<!DOCTYPE html>
+<style>
+    a {
+        color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        body {
+            background-color: #252525;
+        }
+
+        a {
+            color: #fff;
+        }
+    }
+</style>
+<a href="//${request.headers.host}/${id}">${request.protocol}://${request.headers.host}/${id}</a>`,
+    );
 });
 
 app.listen(config.port, () => {
