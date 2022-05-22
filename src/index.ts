@@ -42,6 +42,10 @@ app.get(`/`, (_request, response) => {
             background-color: #252525;
             color: #fff;
         }
+        #form {
+            background-color: #252525;
+            color: #fff;
+        }
     }
 </style>
 </head>
@@ -49,8 +53,8 @@ app.get(`/`, (_request, response) => {
 <fieldset>
     <legend>URL to shorten</legend>
     <form method="post">
-        <input type="url" name="url" required><br><br>
-        <button type="submit">Submit</button>
+        <input id="form" type="url" name="url" required><br><br>
+        <button id="form" type="submit">Submit</button>
     </form>
 </fieldset>
 </body>
