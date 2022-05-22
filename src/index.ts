@@ -31,6 +31,8 @@ process.on("SIGINT", () => {
 
 app.get(`/`, (_request, response) => {
     response.status(200).send(`<!DOCTYPE html>
+<html>
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>boiurl</title>
@@ -42,13 +44,17 @@ app.get(`/`, (_request, response) => {
         }
     }
 </style>
+</head>
+<body>
 <fieldset>
     <legend>URL to shorten</legend>
     <form method="post">
         <input type="url" name="url" required><br><br>
         <button type="submit">Submit</button>
     </form>
-</fieldset>`);
+</fieldset>
+</body>
+</html>`);
 });
 
 app.get(`/:id`, (request, response) => {
