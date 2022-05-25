@@ -40,13 +40,17 @@ app.get(`/`, (_request, response) => {
             background-color: #252525;
             color: #fff;
         }
+        .form-input {
+            background-color: #252525;
+            color: #fff;
+        }
     }
 </style>
 <fieldset>
     <legend>URL to shorten</legend>
     <form method="post">
-        <input type="url" name="url" required><br><br>
-        <button type="submit">Submit</button>
+        <input class="form-input" type="url" name="url" required><br><br>
+        <button class="form-input" type="submit">Submit</button>
     </form>
 </fieldset>`);
 });
