@@ -5,7 +5,6 @@ const database = new sqlite3(`./main.sqlite3`);
 
 const config = {
     port: 8035,
-    urlRegex: /^(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?$/,
 };
 
 // Parse form data
@@ -68,7 +67,10 @@ app.get(`/:id`, (request, response) => {
 app.post(`/`, (request, response) => {
     // Check if it is a valid url
     const { url } = request.body;
-    if (!url || !config.urlRegex.test(url)) {
+    
+    try {
+        url = new URL(string);
+    } catch (_) {
         response.status(400).send(`Please specify a (valid) URL.`);
         return;
     }
