@@ -75,6 +75,11 @@ app.post(`/`, (request, response) => {
         return;
     }
 
+    if (!url.protocol === "http:" || !url.protocol === "https:")  {
+        response.status(400).send(`Please specify a (valid) URL.`);
+        return;
+    }
+    
     // Check if the url is already in the database
     const query = database.prepare(`SELECT ID FROM url WHERE origin=?;`).all(url);
     if (query.length > 0) {
